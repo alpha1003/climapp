@@ -23,7 +23,7 @@ class WeatherService with ChangeNotifier {
     WeatherService(); 
 
 
-    Future<List<Result>> searchLocation(String query) async {
+    Future<List<Result>> searchLocations(String query) async {
         final url = url_query + query; 
 
         final res = await  http.get(Uri.parse(url)); 
@@ -34,13 +34,13 @@ class WeatherService with ChangeNotifier {
 
     } 
 
+    
 
-    void getSuggestionsByQuery( String searchTerm ) {
+    void getSuggestionsByQuery( String searchTerm ) { 
 
     debouncer.value = '';
     debouncer.onValue = ( value ) async {
-      // print('Tenemos valor a buscar: $value');
-      final results = await this.searchLocation(value);
+      final results = await this.searchLocations(value);
       this._suggestionStreamContoller.add( results );
     };
 

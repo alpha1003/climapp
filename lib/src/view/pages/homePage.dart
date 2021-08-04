@@ -18,11 +18,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
           actions: [
               IconButton(
-                onPressed: () {
-                   showSearch(context: context, delegate: LocationSearchDelegate()).then((value){
-                     print(value.runtimeType); 
-                   }); 
-                   
+                onPressed: () async {
+                   final res = await showSearch(context: context, delegate: LocationSearchDelegate()); 
                 },
                 icon: Icon(Icons.search)
              )
