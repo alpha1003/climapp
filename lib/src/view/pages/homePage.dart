@@ -2,6 +2,7 @@ import 'package:climapp/src/models/location_model.dart';
 import 'package:date_format/date_format.dart';
 import 'package:climapp/src/search/locationSearchDelegate.dart';
 import 'package:flutter/material.dart';
+import 'package:climapp/src/view/styles.dart' as style;
 
 class HomePage extends StatefulWidget {
   
@@ -12,14 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> { 
 
- 
-
- TextStyle style1 = TextStyle(fontSize: 50.0,color: Colors.white60,fontFamily: "alpha");
- TextStyle style2 = TextStyle(fontSize: 30.0,color: Colors.white54,fontFamily: "alpha");
- TextStyle style3 = TextStyle(fontSize: 30.0,color: Colors.orange,fontWeight: FontWeight.bold, fontFamily: "alpha");
- TextStyle style4 = TextStyle(fontSize: 40.0,color: Color.fromRGBO(242, 202, 24, 50),fontFamily: "alpha2");
-  TextStyle style5 = TextStyle(fontSize: 40.0,color: Color.fromRGBO(242, 202, 24, 50),fontFamily: "alpha");
-
  bool isData = false;
  late Location location;   
 
@@ -29,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
-          title: Text("ClimApp", style: style4,),
+          title: Text("ClimApp", style: style.style4,),
           actions: [
               IconButton(
                 onPressed: () async {  
@@ -90,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            isData ? Text("${location.title}", style: style1,) : Text(" -- ", style: style1,),
+                            isData ? Text("${location.title}", style: style.style1,) : Text(" -- ", style: style.style1,),
                             _tempText("Now ",
                                      isData ? "${location.consolidatedWeather[0].theTemp.toStringAsFixed(1)}" : " -- "),
                             _tempText("Max ",
@@ -105,8 +98,8 @@ class _HomePageState extends State<HomePage> {
                    mainAxisAlignment: MainAxisAlignment.start,
                    children: [
                         isData? 
-                        Text("${location.consolidatedWeather[0].weatherStateName}", style: style2,)
-                        :Text(" -- ", style: style2,), 
+                        Text("${location.consolidatedWeather[0].weatherStateName}", style: style.style2,)
+                        :Text(" -- ", style: style.style2,), 
                         Container(
                            width: MediaQuery.of(context).size.width  * 0.15,
                            height: MediaQuery.of(context).size.width * 0.15,
@@ -126,11 +119,11 @@ class _HomePageState extends State<HomePage> {
         return RichText(
                 text: TextSpan(
                   text: '$t1: ', 
-                  style: style2,
+                  style: style.style2,
                   children: [
                       TextSpan(
                          text: '$t2°', 
-                         style: style3,
+                         style: style.style3,
                       ),
                   ],
                 ), 
@@ -146,53 +139,66 @@ class _HomePageState extends State<HomePage> {
 
       return Container(
           padding: EdgeInsets.all(15.0),
-          margin: EdgeInsets.only(top: 350.0,left: 20.0, right: 20.0),
-          height: MediaQuery.of(context).size.height*0.25, 
+          margin: EdgeInsets.only(top: 300.0,left: 20.0, right: 20.0),
+          height: MediaQuery.of(context).size.height*0.40, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
               color: Color.fromRGBO(0, 90, 167, 0.2), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30.0)),
           ),
-          child: Row( 
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                    _nextDays(now,1), 
-                    _nextDays(date2,2),
-                    _nextDays(date3,3),
-                    _nextDays(date4,4),
-              ],
+          child: Column(
+            children: [
+              Text("Next days", style: style.style2,),
+              SizedBox(height: 20.0,),
+              Row( 
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                        _nextDays(now,1), 
+                        _nextDays(date2,2),
+                        _nextDays(date3,3),
+                        _nextDays(date4,4),
+                  ],
+              ),
+            ],
           ),
       ); 
   }
 
   Widget _emptyContainer(){
       return Container(
-          margin: EdgeInsets.only(top: 350.0,left: 20.0, right: 20.0),
+          margin: EdgeInsets.only(top: 250.0,left: 20.0, right: 20.0),
           height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
               color: Color.fromRGBO(0, 90, 167, 0.2), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30.0)),
           ),
+          child: Center(child: Text("Next days", style: style.style2,)),
       ); 
   }
 
  Widget _nextDays(DateTime time, int index) {
     
-     return Column( 
-         mainAxisSize: MainAxisSize.min,
-         children: [
-             Text(formatDate(time, ["D"]), style: style5,), 
-             SizedBox(height: 10.0,),
-             Container(
-               width: 30,
-               height: 30,
-               child:Image(image: NetworkImage(urlImage+location.consolidatedWeather[index].weatherStateAbbr+".png")) ,
-             ), 
-             SizedBox(height: 10.0,),
-             Text("${location.consolidatedWeather[index].theTemp.toStringAsFixed(1)}°", style: style3.copyWith(fontSize: 20),)
-         ],
+     return Container(
+       child: Column( 
+           mainAxisSize: MainAxisSize.min,
+           children: [
+               Text(formatDate(time, ["D"]), style: style.style5,), 
+               SizedBox(height: 10.0,),
+               Container(
+                 width: 30,
+                 height: 30,
+                 child:Image(image: NetworkImage(urlImage+location.consolidatedWeather[index].weatherStateAbbr+".png")) ,
+               ),
+               SizedBox(height: 10.0,), 
+               Text("${location.consolidatedWeather[index].weatherStateName}", style: style.style2.copyWith(fontSize: 20),),
+               SizedBox(height: 10.0,),
+               Text("${location.consolidatedWeather[index].theTemp.toStringAsFixed(1)}°", style: style.style3.copyWith(fontSize: 20),),
+               
+               
+           ],
+       ),
      );
     
  } 
