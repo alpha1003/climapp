@@ -22,8 +22,10 @@ class LocationSearchDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) {
-    return Text("C");
+  Widget buildResults(BuildContext context) { 
+
+      return Text("Res"); 
+    
   } 
 
    Widget _emptyContainer() {
@@ -38,11 +40,7 @@ class LocationSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
 
         if( query.isEmpty ) {
-            return Container(
-                child: Center(
-                    child: Icon(Icons.location_on, color: Colors.black38, size: 100,),
-                ),
-            );
+            return _emptyContainer();
         } 
 
         final weatherService = Provider.of<WeatherService>(context, listen: false);
@@ -70,7 +68,13 @@ class LocationSearchDelegate extends SearchDelegate {
         return ListTile(
              title: Text(result.title),
              subtitle: Text(result.locationType), 
-             onTap: () => close(context, result),
+             onTap: () async {
+              
+               final weatherService = Provider.of<WeatherService>(context, listen: false);
+               final res = await weatherService.searchLocation(result.woeid); 
+               close(context, res);
+                       
+             },
         );
   } 
 
