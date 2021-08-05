@@ -40,12 +40,19 @@ class _HomePageState extends State<HomePage> {
              )
           ],
       ), 
-      body: Stack(
-           
+      body: Stack( 
+          clipBehavior: Clip.hardEdge,
           children: [
                _background(),
-               _initialInfo(),
-               isData? _anotherInfo() : _emptyContainer(), 
+               SingleChildScrollView(
+                 child: Column(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                        _initialInfo(),
+                        isData? _anotherInfo() : _emptyContainer(),
+                    ],
+                 ),
+               ),
           ],
       ),
     );
@@ -53,13 +60,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget _background(){
       return Container( 
-          width: double.infinity,
-          height: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomLeft, 
-
+      
                  colors: [
                      Color.fromRGBO(0, 90, 167, 36),
                      Color.fromRGBO(255, 253, 228, 100)
@@ -71,7 +76,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _initialInfo(){
       return Container(
-          margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
+          margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          width: double.infinity,
           child: Row(
              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
              crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,42 +138,38 @@ class _HomePageState extends State<HomePage> {
 
   Widget _anotherInfo(){
       
-      DateTime now = DateTime.now(); 
-      DateTime date2 = DateTime(now.year,now.month, now.day+1);
-      DateTime date3 = DateTime(now.year,now.month, now.day+2, );
-      DateTime date4 = DateTime(now.year,now.month, now.day+3, );
+      DateTime now = DateTime.now( );
+      DateTime date1 = DateTime( now.year,now.month, now.day+1  );
+      DateTime date2 = DateTime( now.year,now.month, now.day+2  );
+      DateTime date3 = DateTime( now.year,now.month, now.day+3, );
+      DateTime date4 = DateTime( now.year,now.month, now.day+4, );
 
       return Container(
           padding: EdgeInsets.all(15.0),
-          margin: EdgeInsets.only(top: 300.0,left: 20.0, right: 20.0),
-          height: MediaQuery.of(context).size.height*0.40, 
+          margin: EdgeInsets.only(top: 20.0),
+          height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
               color: Color.fromRGBO(0, 90, 167, 0.2), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30.0)),
           ),
-          child: Column(
-            children: [
-              Text("Next days", style: style.style2,),
-              SizedBox(height: 20.0,),
-              Row( 
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                        _nextDays(now,1), 
-                        _nextDays(date2,2),
-                        _nextDays(date3,3),
-                        _nextDays(date4,4),
-                  ],
-              ),
-            ],
+          child: Row( 
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                    _nextDays(date1,1), 
+                    _nextDays(date2,2),
+                    _nextDays(date3,3),
+                    _nextDays(date4,4),
+              ],
           ),
       ); 
   }
 
   Widget _emptyContainer(){
       return Container(
-          margin: EdgeInsets.only(top: 250.0,left: 20.0, right: 20.0),
+          
+          //margin: EdgeInsets.only(top: 250.0,left: 20.0, right: 20.0),
           height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
@@ -185,18 +187,16 @@ class _HomePageState extends State<HomePage> {
            mainAxisSize: MainAxisSize.min,
            children: [
                Text(formatDate(time, ["D"]), style: style.style5,), 
-               SizedBox(height: 10.0,),
+               SizedBox(height: 5.0,),
                Container(
                  width: 30,
                  height: 30,
                  child:Image(image: NetworkImage(urlImage+location.consolidatedWeather[index].weatherStateAbbr+".png")) ,
                ),
-               SizedBox(height: 10.0,), 
+               SizedBox(height: 5.0,), 
                Text("${location.consolidatedWeather[index].weatherStateName}", style: style.style2.copyWith(fontSize: 20),),
-               SizedBox(height: 10.0,),
-               Text("${location.consolidatedWeather[index].theTemp.toStringAsFixed(1)}°", style: style.style3.copyWith(fontSize: 20),),
-               
-               
+               SizedBox(height: 5.0,),
+               Text("${location.consolidatedWeather[index].theTemp.toStringAsFixed(1)}°", style: style.style3.copyWith(fontSize: 20),), 
            ],
        ),
      );
