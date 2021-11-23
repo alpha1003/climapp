@@ -1,6 +1,7 @@
 
 import 'package:climapp/src/models/result_model.dart';
 import 'package:climapp/src/services/weather_service.dart';
+import 'package:climapp/src/shared_preferences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,8 @@ class LocationSearchDelegate extends SearchDelegate {
   }
 
 
-  Widget crearItem(BuildContext context, Result result) {
+  Widget crearItem(BuildContext context, Result result) { 
+    UserPreferences _prefs = UserPreferences(); 
         return ListTile(
              title: Text(result.title),
              subtitle: Text(result.locationType), 
@@ -72,6 +74,8 @@ class LocationSearchDelegate extends SearchDelegate {
               
                final weatherService = Provider.of<WeatherService>(context, listen: false);
                final res = await weatherService.searchLocation(result.woeid); 
+               _prefs.lastCity = result.title; 
+               
                close(context, res);
                        
              },

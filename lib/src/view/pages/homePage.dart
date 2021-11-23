@@ -1,4 +1,5 @@
 import 'package:climapp/src/models/location_model.dart';
+import 'package:climapp/src/view/widgets/background.dart';
 import 'package:date_format/date_format.dart';
 import 'package:climapp/src/search/locationSearchDelegate.dart';
 import 'package:flutter/material.dart';
@@ -41,14 +42,15 @@ class _HomePageState extends State<HomePage> {
           ],
       ), 
       body: Stack( 
-          clipBehavior: Clip.hardEdge,
+          //clipBehavior: Clip.hardEdge,
           children: [
-               _background(),
+               Background(),
                SingleChildScrollView(
                  child: Column(
-                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                         _initialInfo(),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.10,),
                         isData? _anotherInfo() : _emptyContainer(),
                     ],
                  ),
@@ -77,19 +79,18 @@ class _HomePageState extends State<HomePage> {
   Widget _initialInfo(){
       return Container(
           margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          width: double.infinity,
           child: Row(
              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.50,
-                    height: MediaQuery.of(context).size.width * 0.70,
+                    
                     child: Column( 
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            isData ? Text("${location.title}", style: style.style1,) : Text(" -- ", style: style.style1,),
+                            isData ? Text("${location.title}", style: style.style1,) : Text(" -- ", style: style.style1,), 
+                            Icon(Icons.thermostat, size: 50, color: Colors.orange,),
                             _tempText("Now ",
                                      isData ? "${location.consolidatedWeather[0].theTemp.toStringAsFixed(1)}" : " -- "),
                             _tempText("Max ",
@@ -101,8 +102,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 Column( 
                    crossAxisAlignment: CrossAxisAlignment.center,
-                   mainAxisAlignment: MainAxisAlignment.start,
-                   children: [
+                   mainAxisAlignment: MainAxisAlignment.center,
+           
+                   children: [ 
+                        SizedBox(height: 75.0,),
                         isData? 
                         Text("${location.consolidatedWeather[0].weatherStateName}", style: style.style2,)
                         :Text(" -- ", style: style.style2,), 
@@ -150,7 +153,7 @@ class _HomePageState extends State<HomePage> {
           height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
-              color: Color.fromRGBO(0, 90, 167, 0.2), 
+              color: Color.fromRGBO(0, 90, 167, 0.6), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30.0)),
           ),
           child: Row( 
@@ -173,7 +176,7 @@ class _HomePageState extends State<HomePage> {
           height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
-              color: Color.fromRGBO(0, 90, 167, 0.2), 
+              color: Color.fromRGBO(0, 90, 167, 0.6), 
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30), bottomRight: Radius.circular(30.0)),
           ),
           child: Center(child: Text("Next days", style: style.style2,)),
