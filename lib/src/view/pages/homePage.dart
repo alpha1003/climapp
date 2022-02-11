@@ -60,21 +60,6 @@ class _HomePageState extends State<HomePage> {
     );
   } 
 
-  Widget _background(){
-      return Container( 
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomLeft, 
-      
-                 colors: [
-                     Color.fromRGBO(0, 90, 167, 36),
-                     Color.fromRGBO(255, 253, 228, 100)
-                 ],
-              ),
-          ),
-      );
-  } 
 
   Widget _initialInfo(){
       return Container(
@@ -141,6 +126,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _anotherInfo(){
       
+
       DateTime now = DateTime.now( );
       DateTime date1 = DateTime( now.year,now.month, now.day+1  );
       DateTime date2 = DateTime( now.year,now.month, now.day+2  );
@@ -171,8 +157,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _emptyContainer(){
       return Container(
-          
-          //margin: EdgeInsets.only(top: 250.0,left: 20.0, right: 20.0),
           height: MediaQuery.of(context).size.height*0.3, 
           width: MediaQuery.of(context).size.width*0.90,
           decoration: BoxDecoration(
